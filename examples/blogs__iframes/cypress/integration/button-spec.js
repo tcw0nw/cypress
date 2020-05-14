@@ -6,8 +6,6 @@ import {
 import { wait } from '@apollo/react-testing'
 
 const getIframeDocument = () => {
-  cy.wait(12000)
-
   return cy.get('#frame_content')
   // Cypress yields jQuery element, which has the real
   // DOM element under property "0".
@@ -34,7 +32,7 @@ const getIframeBody = () => {
 describe('Recipe: blogs__iframes', () => {
   skipOn('firefox', () => {
     it('gets the post', () => {
-      cy.visit('https://console.capitalonline.net/loadbalancers?token=a36a3ba06003685dd63f6815cbc5646b70970e97522a9f7a2811f3cc20e2a22f')
+      cy.visit('https://console.capitalonline.net/loadbalancers?token=b1f392c478405566515797b64aca6075e19a037d5368a832613aa86d61ec42fc')
       getIframeBody().find('.header_v2 > a').should('have.text', '创建负载均衡服务').click()
       getIframeBody().find('.product_type_box:nth-child(1) .open_server').should('have.text', '开通服务').click()
       getIframeBody().find('.create_btn_v2:nth-child(3)').should('have.text', '4C8G').click()
