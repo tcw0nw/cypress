@@ -6,29 +6,15 @@ import {
 // eslint-disable-next-line no-unused-vars
 import { wait } from '@apollo/react-testing'
 
-const getIframeDocument = () => {
-  return cy.get('#frame_content')
-  // Cypress yields jQuery element, which has the real
-  // DOM element under property "0".
-  // From the real DOM iframe element we can get
-  // the "document" element, it is stored in "contentDocument" property
-  // Cypress "its" command can access deep properties using dot notation
-  // https://on.cypress.io/its
-  // cy.its also waits for the property to exist
-  .its('0.contentDocument')
-}
-
-// eslint-disable-next-line no-unused-vars
-const getIframeBody = () => {
-  // get the document
-  return getIframeDocument()
-  // automatically retries until body is loaded
-  .its('body').should('not.be.undefined')
-  // wraps "body" DOM element to allow
-  // chaining more Cypress commands, like ".find(...)"
-  // https://on.cypress.io/wrap
-  .then(cy.wrap)
-}
+// const getIframeDocument = () => {
+//   return cy.get('#frame_content')
+//   .its('0.contentDocument')
+// }
+// const getIframeBody = () => {
+//   return getIframeDocument()
+//   .its('body').should('not.be.undefined')
+//   .then(cy.wrap)
+// }
 
 // Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe, callback = () => {}) => {
 //   // For more info on targeting inside iframes refer to this GitHub issue:
@@ -42,13 +28,15 @@ const getIframeBody = () => {
 //   .within({}, callback)
 // })
 
-describe('Recipe: blogs__iframes', () => {
-  let s = 'b1f392c478405566515797b64aca6075e19a037d5368a832613aa86d61ec42fc'
+describe('PaaS', () => {
+  beforeEach(() => {
+    cy.login()
+    cy.wait(12000)
+  })
 
-  it('should 123', function () {
-    cy.visit(`/loadbalancers?token=${s}`)
+  it('负载均衡', function () {
     cy.get('#frame_content').iframe(() => {
-    // Targets the input within the iframe element
+      // Targets the input within the iframe element
       cy.get('.header_v2 > a').should('have.text', '创建负载均衡服务').click()
       cy.get('.product_type_box:nth-child(1) .open_server').should('have.text', '开通服务').click()
       cy.get('.create_btn_v2:nth-child(3)').should('have.text', '4C8G').click()
