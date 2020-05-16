@@ -23,3 +23,21 @@ Cypress.Commands.add('getIframeBody', () => {
   // https://on.cypress.io/wrap
   .then((body) => cy.wrap(body, { log: false }))
 })
+
+Cypress.Commands.add('login', () => {
+  return cy.request({
+    method: 'GET',
+    url: 'http://api2.capitalonline.net/gic/v1/get_token/',
+    headers: {
+      username: 'tcwaily@me.com',
+      password: 'test123',
+    },
+  }).then((response) => {
+    const target = (response.body['Access-Token'])
+
+    // eslint-disable-next-line no-console
+    console.log(target)
+    // eslint-disable-next-line no-useless-concat
+    cy.visit(`${'https://console.capitalonline.net/loadbalancers' + '?token='}${target}`)
+  })
+})
