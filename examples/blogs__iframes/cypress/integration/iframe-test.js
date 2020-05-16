@@ -45,7 +45,7 @@ const getIframeBody = () => {
 describe('Recipe: blogs__iframes', () => {
   let s = 'b1f392c478405566515797b64aca6075e19a037d5368a832613aa86d61ec42fc'
 
-  it('should 123', function () {
+  it('负载均衡', function () {
     cy.visit(`/loadbalancers?token=${s}`)
     cy.get('#frame_content').iframe(() => {
     // Targets the input within the iframe element
